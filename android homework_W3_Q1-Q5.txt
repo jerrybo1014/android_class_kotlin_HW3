@@ -1,0 +1,156 @@
+﻿1. What is Encapsulation ? Try to list out the benefits of Encapsulation.
+
+物件導向程式有三個機制(Object-Oriented Programming, OOP) : 封裝(encapsulation)、繼承 (inheritance)、多型(polymorphism)
+=>繼承像是親屬的重直關係(父母子女)，多型則像是親屬的平行關係(兄弟姊妹)，封裝的觀念就是資訊隱藏，類別的成員變數只能在類別中處理。
+
+封裝(encapsulation):
+將屬性、方法封裝到類別中，
+並且將物件內部的資料隱藏起來(private)，只能透過物件本身所提供的介面(interface)取得物件內部屬性或者方法，
+物件內部的細節資料或者邏輯則隱藏起來，其他物件即無法瞭解此物件的內部細節，
+若不經過允許之窗口(即此物件提供之方法)便無從更動此物件內之資料，只要在必要時才讓欄位與方法為public。
+
+benefits
+(a)對使用物件者來說，怎麼實作出這些操作、怎麼維持它的狀態並不重要，重要的是它接受輸入後回傳正確的值，
+   實作物件時去封裝結構與運作方式這些細節，可減少使用端對物件的實作細節的依賴，降低實作細節的變更對使用端的影響。
+
+(b)封裝表示讓一個類別對其他類別隱藏特定資訊，可以減少程式BUG，因為相依性減少了
+
+(c)既然可以封裝出一個類別，也可以使用別人封裝好的類別，通常程式平台會提供許多已封裝好的類別，直接拿來使用會省下許多時間，
+   這樣就可以達到很高的再用性(reusability)，
+
+
+
+2. Try to explain what is enum and why we use them.
+
+enum的全稱為 enumeration(列舉)
+
+enum是一種數據類型，在實際問題中，有些變量的取值被限定在一個有限的範圍，
+例如:一個星期只有七天、一年只有十二個月...等等，若把這些變量說明為整數型or字符型並不恰當，
+因此程式語言提供的一種列舉(enum)類型，
+其定義為列舉出所有可能的取值，被定義為該"列舉"類型的變量取值不能超多列舉定義的範圍。
+
+列舉有以下特性:
+(a)列舉值是常量不是變量，不能在程式中用賦值語法再對它賦值。
+(b)列舉元素本身由系統定義了一個表示序號的值，依順序由0開始定義為0,1,2,...(ordinal)。
+(c)列舉類無法被繼承
+
+
+
+3. How to use enum in Kotlin? Attach a sample code that use enum in Kotlin.
+
+Kotlin內使用"enum"的聲明格式:
+enum class 類名{ 
+列舉常量...} 
+//每一個列舉常量都是一個對象，在他們之間用逗號","分隔
+//每一個列舉常量都包含兩種屬性->name(列舉常量名)和ordinal(常量位置)
+//使用方式為 變數 = 列舉類名.列舉常量
+
+
+如果每個列舉成員都有一個固定對應的資料，則也可使用下列語法:
+enum class 名稱(val 參數名稱: 參數型態) {
+    成員名稱(對應的值),...
+}
+
+sample code:
+
+enum class restaurant (var price : Int){
+    rice(30),
+    noodle(35),
+    soup(25),
+}
+//假設一間餐廳只有三種餐點，使用列舉宣告這三種選擇並對應其價錢
+
+fun main(args: Array<String>) {
+
+    val eat1 = restaurant.rice
+    val eat2 = restaurant.soup
+    //宣告去此餐廳吃的餐點(列舉常量)
+
+    println("eat1 = " + eat1 + ", price = " + eat1.price)
+    println("eat2 = " + eat2 + ", price = " + eat2.price)
+    //印出吃的餐點(列舉常量)與其價錢(對應值)
+
+    println("name = " + restaurant.rice + ", ordinal = " + restaurant.rice.ordinal)
+    println("name = " + restaurant.noodle + ", ordinal = " + restaurant.noodle.ordinal)
+    println("name = " + restaurant.soup + ", ordinal = " + restaurant.soup.ordinal)
+    //印出restaurant列舉類的列舉常數與其位置
+}
+
+執行結果:
+eat1 = rice, price = 30
+eat2 = soup, price = 25
+name = rice, ordinal = 0
+name = noodle, ordinal = 1
+name = soup, ordinal = 2
+
+//皆符合預期
+
+
+
+4. What are the differences between LinearLayout and RelativeLayout ? Try to explain in
+details.
+
+LinearLayout (線性佈局)
+LinearLayout中的所有 View 都是線性排列的，以它設置的垂直或水平的屬性值，來排列所有的子元素。
+所有子元素都被堆放在其它元素之後，因此一個垂直列表的每一行只會有一個元素，不管他們有多寬，而一個水平列表將會只有一個行高(高度為最高子元素的高度加上邊框高度)。
+LinearLayout保持子元素之間的間隔以及互相對齊(相對一個元素的右對齊、中間對齊或者左對齊)。
+
+RelativeLayout(相對佈局)
+RelativeLayout中所有View都是相對性的，可以設定子元素相對於其它元素或父元素的位置(通過ID 指定)。
+因此可以以右對齊，或上下，或置於屏幕中央的形式來排列兩個元素。
+元素按順序排列，因此如果第一個元素在屏幕的中央，那麼相對於這個元素的其它元素將以屏幕中央的相對位置來排列。
+
+<LinearLayout and RelativeLayout comparison>
+
+(a)View擺放相關
+僅在RelativeLayout中有效：
+在父親佈局或某個控件的相對位置
+定義和某個控件對齊
+
+僅在LinearLayout中有效:
+設置控件在一排或一列中所佔比例值
+
+LinearLayout無法像 RelativeLayout 裡的 View 可以上下層堆疊，雖沒有什麼自由度，但幾乎沒有什麼參數需要設定，在一些特定的排版裡較簡單好用。
+
+(b)解析度相關
+Android 的手機螢幕太多種解析度，太多種尺寸，所以開發者很容易發生在A手機看起來畫面正常，到B手機整個UI卻大跑版的情況，
+RelativeLayout 因為所有 View 都是相對的，比較容易處理各種解析度的狀況。假設我們要放一張圖在中間， 
+RelativeLayout 是可以不受限於螢幕大小比例就直接做到的。
+
+(c)效能相關
+
+View繪製流程依次經過measure()，layout()和draw()三個過程才最終將一個View繪製出來
+其中layout和draw的過程兩者相差無幾，但measure上RelativeLayout比LinearLayout慢了許多，原因如下:
+RelativeLayout中子View的排列方式是基於彼此的依賴關係，而這個依賴關係可能和佈局中View的順序並不相同，在確定每個子View的位置的時候，
+需要橫向縱向分別進行一次排序測量，所以分別對所有子View進行兩次measure
+LinearLayout的measure就簡單的多，只需判斷線性佈局是水平佈局還是垂直佈局即可，如果不使用weight屬性進行佈局，則不進行第二次measure。
+
+=>因此，在層級結構相同時LinearLayout效率較好，因為它只需要一次Measure
+但RelativeLayout能在同一層級實現比較複雜的布局，所以大部分情況還是使用RelativeLayout會有較好的效率
+
+
+
+5. Try to explain the benefits of ConstraintLayout . Why you should use it?
+
+ConstraintLayout(約束佈局)
+約束佈局控件之間、控件與父佈局之間具有約束關係，控件的位置是按照約束來計算的，有點類似RelativeLayout，
+與RelativeLayout不同，它非常適合在可視化介面來編寫程式，所有的佈局可以在可視化界面上通過拖動來調整，相當方便。
+
+<benefits>
+(a)動態新建布局->所見及所得，增加方便性。
+(b)可以使用Guideline來輔助布局
+(c)透過bias對view的位置做一些偏移
+(d)用ratio的方式幫view調整大小
+(e)引入chain的概念，幫一組views做Layout
+   =>spread、spread inside、weighted、packed、packed chain with bias
+
+<Why you should use it?>
+(a)效能
+以往在建構複雜的畫面時，經常是 LinearLayout 與 RelativeLayout 等等相互組合，拼湊出相當深且複雜的樹狀 xml。
+但Layout結構層次太多會造成設變困擾，取用元件也較耗資源，效能就在層層的 measurement/layout 之中持續消耗。
+改用 ConstraintLayout 取代傳統 Layout 的複雜組合，把 xml 檔變得更加扁平，效率可以得到提升。
+
+(b)可視化的方便性
+LinearLayout與RelativeLayout雖然有提供Design視覺化模式，但往往在XML編輯器中佈局會有較好的效果，
+而ConstraintLayout的所有工作都可以使用佈局編輯器的視覺化工具中完成，因為佈局API和佈局編輯器對此專門構建的。
+因此你可以完全通過拖拽的方式去構建一個使用了ConstraintLayout 的佈局，而不用直接在XML中編輯，這對設計者來說是相當方便且直覺的。
