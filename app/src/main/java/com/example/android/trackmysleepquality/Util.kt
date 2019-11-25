@@ -21,6 +21,7 @@ import android.content.res.Resources
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
+import android.widget.EditText
 import androidx.core.text.HtmlCompat
 import com.example.android.trackmysleepquality.database.SleepNight
 import java.text.SimpleDateFormat
@@ -47,6 +48,10 @@ fun convertNumericQualityToString(quality: Int, resources: Resources): String {
     return qualityString
 }
 
+fun covertEditTextToString( aa : EditText , resources: Resources){
+    var informationstring = ""
+
+}
 
 
 /**

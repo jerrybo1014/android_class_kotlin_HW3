@@ -17,20 +17,30 @@
 package com.example.android.trackmysleepquality.sleepquality
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.room.TypeConverter
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentSleepQualityBinding
 import com.example.android.trackmysleepquality.database.SleepNight
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_sleep_quality.*
+import kotlinx.android.synthetic.main.fragment_sleep_tracker.*
+import kotlinx.android.synthetic.main.fragment_sleep_tracker.view.*
+import kotlinx.coroutines.newFixedThreadPoolContext
+import org.w3c.dom.Text
+import kotlin.coroutines.coroutineContext
 
 /**
  * Fragment that displays a list of clickable icons,
@@ -39,12 +49,12 @@ import kotlinx.android.synthetic.main.fragment_sleep_quality.*
  * and the database is updated.
  */
 class SleepQualityFragment : Fragment() {
-
     /**
      * Called when the Fragment is ready to display content to the screen.
      *
      * This function uses DataBindingUtil to inflate R.layout.fragment_sleep_quality.
      */
+    //lateinit var ddd : EditText
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -64,21 +74,65 @@ class SleepQualityFragment : Fragment() {
                 ViewModelProviders.of(
                         this, viewModelFactory).get(SleepQualityViewModel::class.java)
         //val aa = binding.sleepInformation.text
+       var ddd = binding.sleepInformation
+
+        ddd.addTextChangedListener(object :TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                sleepQualityViewModel.textenter =  ddd.text.toString()
+            }
+        })
+
 
         // To use the View Model with data binding, you have to explicitly
         // give the binding object a reference to it.
         binding.sleepQualityViewModel = sleepQualityViewModel
 
+        //binding.setLifecycleOwner(this)
+
+
+
+        /*binding.sleepInformation.addTextChangedListener(object : TextView() {
+
+        })*/
+
+        //var atest = binding.sleepInformation.addTextChangedListener(
+
+
+
+        /*var iii : String = binding.sleepInformation.text.toString()
+        sleepQualityViewModel.textenter=iii*/
+
+        //sleepQualityViewModel.score
+
+
+
+
+
+
+        //@TypeConverter
+        //fun ssssss(){}
+
+
+
 
 
         // Add an Observer to the state variable for Navigating when a Quality icon is tapped.
         sleepQualityViewModel.navigateToSleepTracker.observe(this, Observer {
+
             if (it == true) { // Observed state is true.
                 this.findNavController().navigate(
+
                         SleepQualityFragmentDirections.actionSleepQualityFragmentToSleepTrackerFragment())
                 // Reset state to make sure we only navigate once, even if the device
                 // has a configuration change.
-                val aa : String = binding.sleepInformation.text.toString()
+                // aa : String = binding.sleepInformation.text.toString()
+
                 sleepQualityViewModel.doneNavigating()
             }
         })

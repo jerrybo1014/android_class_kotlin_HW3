@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.webkit.WebView
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.adapters.TextViewBindingAdapter
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
 import com.example.android.trackmysleepquality.databinding.FragmentSleepQualityBinding
@@ -39,7 +40,7 @@ import kotlinx.coroutines.*
  */
 class SleepQualityViewModel(
         private val sleepNightKey: Long = 0L,
-        val database: SleepDatabaseDao) : ViewModel() {
+        val database: SleepDatabaseDao/*,val sssss :String*/) : ViewModel() {
 
 
 
@@ -108,10 +109,16 @@ class SleepQualityViewModel(
     /*override fun onCreate(savedInstantState: Bundle?) {
         super.onCreate()
     }*/
+    var textenter : String ="aaa"
+/*
+    private val _score = MutableLiveData<String>()
+    val score: LiveData<String>
+        get() = _score
+    init {
+        _score.value = "init"
+    }*/
 
 
-
-var aa = database.getAllNights()
 
     fun onSetSleepQuality(quality: Int) {
 
@@ -119,12 +126,12 @@ var aa = database.getAllNights()
             // IO is a thread pool for running operations that access the disk, such as
             // our Room database.
 
-            var binding : FragmentSleepQualityBinding
+            //var binding : FragmentSleepQualityBinding
 
             withContext(Dispatchers.IO) {
                 val tonight = database.get(sleepNightKey) ?: return@withContext
+                tonight.sleepInformation = textenter
                 tonight.sleepQuality = quality
-
                 database.update(tonight)
             }
             // Setting this state variable to true will alert the observer and trigger navigation.
